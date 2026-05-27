@@ -1,0 +1,2272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Search for Meaning – Interfaith Conference</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+
+        background: radial-gradient(
+          circle 180px at var(--mouse-x) var(--mouse-y),
+          rgba(255, 230, 170, 0.18),
+          rgba(201, 168, 76, 0.12) 20%,
+          rgba(201, 168, 76, 0.06) 35%,
+          transparent 65%
+        );
+
+        mix-blend-mode: screen;
+        transition: background 0.05s linear;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        width: 420px;
+        height: 420px;
+        left: calc(var(--mouse-x) - 210px);
+        top: calc(var(--mouse-y) - 210px);
+        background: radial-gradient(
+          circle,
+          rgba(74, 111, 165, 0.12),
+          transparent 70%
+        );
+        pointer-events: none;
+        z-index: 9998;
+        filter: blur(40px);
+      }
+
+      .section-body,
+      .card-connection,
+      .q-text,
+      .sched-desc,
+      .sym-desc,
+      .hero-subtitle,
+      .footer-sub {
+        color: rgba(255, 255, 255, 0.88) !important;
+      }
+
+      .card-verse {
+        color: #fff8e7;
+        text-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-title,
+      .section-title,
+      .speaker-name {
+        text-shadow:
+          0 0 30px rgba(201, 168, 76, 0.25),
+          0 0 60px rgba(201, 168, 76, 0.12),
+          0 0 3px rgba(255, 255, 255, 0.3);
+      }
+
+      section {
+        animation: sectionFloat 8s ease-in-out infinite;
+      }
+
+      @keyframes sectionFloat {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-4px);
+        }
+      }
+
+      .scripture-card,
+      .question-item,
+      .speaker-card,
+      .symbol-card,
+      .prayer-room {
+        backdrop-filter: blur(14px);
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+          0 10px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      .scripture-card:hover,
+      .speaker-card:hover,
+      .symbol-card:hover,
+      .question-item:hover {
+        transform: translateY(-10px) scale(1.02);
+
+        box-shadow:
+          0 20px 70px rgba(201, 168, 76, 0.15),
+          0 0 40px rgba(201, 168, 76, 0.08);
+
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.06),
+          rgba(255, 255, 255, 0.015)
+        );
+      }
+
+      .scripture-card::after,
+      .speaker-card::after,
+      .symbol-card::after {
+        content: "";
+        position: absolute;
+        inset: -200%;
+        background: linear-gradient(
+          120deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.06) 45%,
+          rgba(255, 255, 255, 0.12) 50%,
+          transparent 70%
+        );
+
+        transform: rotate(25deg);
+        animation: shimmerMove 8s linear infinite;
+        pointer-events: none;
+      }
+
+      @keyframes shimmerMove {
+        from {
+          transform: translateX(-50%) rotate(25deg);
+        }
+        to {
+          transform: translateX(50%) rotate(25deg);
+        }
+      }
+
+      nav {
+        box-shadow:
+          0 10px 40px rgba(0, 0, 0, 0.45),
+          0 0 20px rgba(201, 168, 76, 0.08);
+      }
+
+      .hero-bg-orb {
+        animation:
+          orbPulse 8s ease-in-out infinite,
+          drift 16s ease-in-out infinite;
+      }
+
+      @keyframes drift {
+        0%,
+        100% {
+          transform: translate(0px, 0px);
+        }
+        25% {
+          transform: translate(20px, -10px);
+        }
+        50% {
+          transform: translate(-15px, 15px);
+        }
+        75% {
+          transform: translate(10px, 20px);
+        }
+      }
+
+      .day-pill {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .day-pill::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.12),
+          transparent
+        );
+
+        transform: translateX(-120%);
+        transition: transform 0.6s ease;
+      }
+
+      .day-pill:hover::before {
+        transform: translateX(120%);
+      }
+
+      body {
+        cursor: none;
+      }
+
+      .custom-cursor {
+        width: 18px;
+        height: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 10000;
+
+        transform: translate(-50%, -50%);
+        backdrop-filter: blur(4px);
+
+        box-shadow:
+          0 0 20px rgba(201, 168, 76, 0.8),
+          0 0 40px rgba(201, 168, 76, 0.4);
+
+        transition:
+          width 0.2s ease,
+          height 0.2s ease,
+          transform 0.05s linear;
+      }
+
+      .custom-cursor.hovering {
+        width: 36px;
+        height: 36px;
+      }
+      :root {
+        --gold: #c9a84c;
+        --gold-light: #e8c97a;
+        --gold-pale: #f5e6b8;
+        --deep: #0d0a1a;
+        --deep2: #16112e;
+        --deep3: #1e1640;
+        --cream: #f7f0e0;
+        --text: #e8dfc8;
+        --accent-blue: #4a6fa5;
+        --accent-rose: #9b4e63;
+        --white: #fff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--deep);
+        color: var(--text);
+        font-family: "EB Garamond", serif;
+        overflow-x: hidden;
+        cursor: default;
+      }
+
+      #stars-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+        background: var(--gold);
+        opacity: 0;
+        animation: floatUp var(--dur) var(--delay) infinite ease-in-out;
+      }
+      @keyframes floatUp {
+        0% {
+          opacity: 0;
+          transform: translateY(100vh) scale(0);
+        }
+        10% {
+          opacity: 0.6;
+        }
+        90% {
+          opacity: 0.2;
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(-10vh) scale(1.5);
+        }
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+        background: linear-gradient(
+          to bottom,
+          rgba(13, 10, 26, 0.98),
+          transparent
+        );
+        padding: 18px 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        backdrop-filter: blur(4px);
+        border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+      }
+      .nav-logo {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 0.85rem;
+        color: var(--gold);
+        letter-spacing: 0.15em;
+        text-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+      }
+      .nav-links a {
+        font-family: "Cinzel", serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        color: rgba(232, 223, 200, 0.75);
+        text-decoration: none;
+        transition:
+          color 0.3s,
+          text-shadow 0.3s;
+      }
+      .nav-links a:hover {
+        color: var(--gold);
+        text-shadow: 0 0 12px rgba(201, 168, 76, 0.5);
+      }
+
+      #hero {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px 20px;
+        overflow: hidden;
+      }
+
+      .hero-bg-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.18;
+        animation: orbPulse 8s ease-in-out infinite;
+      }
+      .orb1 {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, #c9a84c, transparent);
+        top: -100px;
+        left: -200px;
+        animation-delay: 0s;
+      }
+      .orb2 {
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, #4a6fa5, transparent);
+        bottom: -100px;
+        right: -150px;
+        animation-delay: 3s;
+      }
+      .orb3 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, #9b4e63, transparent);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation-delay: 5s;
+      }
+      @keyframes orbPulse {
+        0%,
+        100% {
+          transform: scale(1) translate(0, 0);
+          opacity: 0.18;
+        }
+        50% {
+          transform: scale(1.15) translate(20px, -15px);
+          opacity: 0.28;
+        }
+      }
+
+      .mandala-ring {
+        position: absolute;
+        width: 650px;
+        height: 650px;
+        border: 1px solid rgba(201, 168, 76, 0.1);
+        border-radius: 50%;
+        animation: spinSlow 60s linear infinite;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .mandala-ring::before {
+        content: "";
+        position: absolute;
+        inset: 20px;
+        border: 1px dashed rgba(201, 168, 76, 0.12);
+        border-radius: 50%;
+      }
+      .mandala-ring::after {
+        content: "";
+        position: absolute;
+        inset: 50px;
+        border: 1px solid rgba(201, 168, 76, 0.08);
+        border-radius: 50%;
+      }
+      @keyframes spinSlow {
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+
+      .hero-symbols {
+        display: flex;
+        gap: 28px;
+        margin-bottom: 28px;
+        font-size: 2.2rem;
+        opacity: 0;
+        animation: fadeUp 1s 0.3s forwards;
+      }
+      .hero-symbols span {
+        display: inline-block;
+        filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.6));
+        animation: symbolFloat 4s ease-in-out infinite;
+        color: var(--gold);
+      }
+      .hero-symbols span:nth-child(2) {
+        animation-delay: 0.5s;
+      }
+      .hero-symbols span:nth-child(3) {
+        animation-delay: 1s;
+      }
+      .hero-symbols span:nth-child(4) {
+        animation-delay: 1.5s;
+      }
+      .hero-symbols span:nth-child(5) {
+        animation-delay: 2s;
+      }
+      @keyframes symbolFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+
+      .hero-eyebrow {
+        font-family: "Cinzel", serif;
+        font-size: 0.72rem;
+        letter-spacing: 0.4em;
+        color: var(--gold);
+        margin-bottom: 18px;
+        opacity: 0;
+        animation: fadeUp 1s 0.5s forwards;
+        text-transform: uppercase;
+      }
+      .hero-title {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(2.2rem, 6vw, 5.5rem);
+        font-weight: 900;
+        line-height: 1.1;
+        color: var(--white);
+        text-shadow:
+          0 0 60px rgba(201, 168, 76, 0.3),
+          0 0 120px rgba(201, 168, 76, 0.1);
+        opacity: 0;
+        animation: fadeUp 1s 0.7s forwards;
+        margin-bottom: 16px;
+      }
+      .hero-title span {
+        color: var(--gold);
+      }
+      .hero-subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+        font-style: italic;
+        color: rgba(232, 223, 200, 0.7);
+        max-width: 640px;
+        line-height: 1.7;
+        opacity: 0;
+        animation: fadeUp 1s 0.9s forwards;
+        margin-bottom: 36px;
+      }
+
+      .hero-divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 40px;
+        opacity: 0;
+        animation: fadeUp 1s 1.1s forwards;
+      }
+      .hero-divider::before,
+      .hero-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        max-width: 120px;
+        background: linear-gradient(to right, transparent, var(--gold));
+      }
+      .hero-divider::after {
+        background: linear-gradient(to left, transparent, var(--gold));
+      }
+      .hero-divider span {
+        color: var(--gold);
+        font-size: 1.2rem;
+      }
+
+      .hero-days {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+        opacity: 0;
+        animation: fadeUp 1s 1.3s forwards;
+      }
+      .day-pill {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        padding: 8px 22px;
+        border: 1px solid rgba(201, 168, 76, 0.4);
+        border-radius: 999px;
+        color: var(--gold-light);
+        background: rgba(201, 168, 76, 0.05);
+        transition: all 0.3s;
+        cursor: pointer;
+      }
+      .day-pill:hover {
+        background: rgba(201, 168, 76, 0.15);
+        border-color: var(--gold);
+        box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+      }
+
+      .scroll-cue {
+        position: absolute;
+        bottom: 36px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        opacity: 0;
+        animation: fadeUp 1s 2s forwards;
+        color: rgba(201, 168, 76, 0.5);
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+      }
+      .scroll-arrow {
+        width: 20px;
+        height: 20px;
+        border-right: 1px solid rgba(201, 168, 76, 0.5);
+        border-bottom: 1px solid rgba(201, 168, 76, 0.5);
+        transform: rotate(45deg);
+        animation: scrollBounce 2s ease-in-out infinite;
+      }
+      @keyframes scrollBounce {
+        0%,
+        100% {
+          transform: rotate(45deg) translate(0, 0);
+        }
+        50% {
+          transform: rotate(45deg) translate(4px, 4px);
+        }
+      }
+
+      section {
+        position: relative;
+        z-index: 2;
+        padding: 100px 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .section-full {
+        max-width: 100%;
+        padding: 100px 0;
+      }
+
+      .section-tag {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.4em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        display: block;
+      }
+      .section-title {
+        font-family: "Cinzel Decorative", serif;
+        font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+        font-weight: 700;
+        color: var(--white);
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+      .section-title span {
+        color: var(--gold);
+      }
+      .section-body {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.15rem;
+        line-height: 1.85;
+        color: rgba(232, 223, 200, 0.8);
+        max-width: 680px;
+      }
+
+      .gold-line {
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(to right, var(--gold), transparent);
+        margin-bottom: 32px;
+      }
+
+      #theme {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      .theme-visual {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+      .big-symbol {
+        font-size: 5rem;
+        line-height: 1;
+        filter: drop-shadow(0 0 30px rgba(201, 168, 76, 0.5));
+        animation: glowPulse 3s ease-in-out infinite;
+      }
+      @keyframes glowPulse {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.4));
+        }
+        50% {
+          filter: drop-shadow(0 0 50px rgba(201, 168, 76, 0.8));
+        }
+      }
+      .theme-quote {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.25rem;
+        font-style: italic;
+        color: var(--gold-light);
+        text-align: center;
+        line-height: 1.7;
+        border-left: 2px solid var(--gold);
+        padding-left: 20px;
+      }
+
+      #scripture {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      }
+      .scripture-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        margin-top: 52px;
+      }
+      .scripture-card {
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(201, 168, 76, 0.2);
+        border-radius: 2px;
+        padding: 44px 36px;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.4s,
+          box-shadow 0.4s,
+          border-color 0.4s;
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      .scripture-card.visible {
+        animation: cardReveal 0.7s forwards;
+      }
+      @keyframes cardReveal {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .scripture-card:hover {
+        transform: translateY(-6px);
+        box-shadow:
+          0 20px 60px rgba(0, 0, 0, 0.4),
+          0 0 40px rgba(201, 168, 76, 0.08);
+        border-color: rgba(201, 168, 76, 0.5);
+      }
+      .scripture-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--gold),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+      .scripture-card:hover::before {
+        opacity: 1;
+      }
+      .card-religion {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.35em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .card-religion::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: rgba(201, 168, 76, 0.3);
+      }
+      .card-symbol {
+        font-size: 2.6rem;
+        margin-bottom: 22px;
+        display: block;
+        filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.4));
+      }
+      .card-verse {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.2rem;
+        font-style: italic;
+        color: var(--cream);
+        line-height: 1.7;
+        margin-bottom: 16px;
+      }
+      .card-source {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        color: var(--gold);
+        opacity: 0.7;
+        margin-bottom: 24px;
+      }
+      .card-connection {
+        font-family: "EB Garamond", serif;
+        font-size: 0.92rem;
+        line-height: 1.75;
+        color: rgba(232, 223, 200, 0.65);
+        border-top: 1px solid rgba(201, 168, 76, 0.15);
+        padding-top: 20px;
+      }
+
+      #dialogue {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      }
+      .dialogue-bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse at center,
+          rgba(74, 111, 165, 0.08) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .questions-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin-top: 52px;
+      }
+      .question-item {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        padding: 28px 32px;
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(201, 168, 76, 0.12);
+        border-radius: 2px;
+        transition: all 0.3s;
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      .question-item.visible {
+        animation: slideIn 0.6s forwards;
+      }
+      @keyframes slideIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      .question-item:hover {
+        background: rgba(201, 168, 76, 0.05);
+        border-color: rgba(201, 168, 76, 0.3);
+      }
+      .q-number {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1.5rem;
+        color: var(--gold);
+        opacity: 0.4;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+      .q-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.05rem;
+        line-height: 1.75;
+        color: rgba(232, 223, 200, 0.8);
+        font-style: italic;
+      }
+
+      #speakers {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      }
+      .speakers-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+        margin-top: 52px;
+      }
+      .speaker-card {
+        background: linear-gradient(
+          160deg,
+          rgba(201, 168, 76, 0.06),
+          rgba(255, 255, 255, 0.02)
+        );
+        border: 1px solid rgba(201, 168, 76, 0.18);
+        padding: 44px 32px 36px;
+        text-align: center;
+        position: relative;
+        transition: all 0.4s;
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      .speaker-card.visible {
+        animation: cardReveal 0.8s forwards;
+      }
+      .speaker-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        box-shadow:
+          0 30px 80px rgba(0, 0, 0, 0.5),
+          0 0 40px rgba(201, 168, 76, 0.1);
+        border-color: rgba(201, 168, 76, 0.4);
+      }
+      .speaker-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold), var(--accent-blue));
+        margin: 0 auto 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        border: 2px solid rgba(201, 168, 76, 0.3);
+        box-shadow: 0 0 30px rgba(201, 168, 76, 0.2);
+      }
+      .speaker-name {
+        font-family: "Cinzel", serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--white);
+        margin-bottom: 6px;
+      }
+      .speaker-religion {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        color: var(--gold);
+        margin-bottom: 24px;
+        text-transform: uppercase;
+      }
+      .speaker-principles {
+        list-style: none;
+        text-align: left;
+        margin-top: 20px;
+        border-top: 1px solid rgba(201, 168, 76, 0.15);
+        padding-top: 20px;
+      }
+      .speaker-principles li {
+        font-family: "EB Garamond", serif;
+        font-size: 0.9rem;
+        color: rgba(232, 223, 200, 0.7);
+        line-height: 1.65;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        display: flex;
+        gap: 10px;
+      }
+      .speaker-principles li::before {
+        content: "✦";
+        color: var(--gold);
+        font-size: 0.6rem;
+        flex-shrink: 0;
+        margin-top: 4px;
+      }
+
+      #prayer {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      }
+      .prayer-layout {
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 64px;
+        align-items: start;
+        margin-top: 52px;
+      }
+      .schedule-list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .schedule-item {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: all 0.3s;
+      }
+      .schedule-item.visible {
+        animation: slideIn 0.5s forwards;
+      }
+      .schedule-item:hover {
+        padding-left: 8px;
+      }
+      .sched-time {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        color: var(--gold);
+        opacity: 0.7;
+        white-space: nowrap;
+        min-width: 60px;
+        padding-top: 3px;
+      }
+      .sched-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        color: var(--cream);
+        margin-bottom: 4px;
+      }
+      .sched-desc {
+        font-family: "EB Garamond", serif;
+        font-size: 0.85rem;
+        color: rgba(232, 223, 200, 0.55);
+        line-height: 1.6;
+      }
+
+      .prayer-room {
+        background: linear-gradient(
+          135deg,
+          rgba(201, 168, 76, 0.05),
+          rgba(74, 111, 165, 0.05)
+        );
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        padding: 44px;
+        position: relative;
+        overflow: hidden;
+      }
+      .room-title {
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.3em;
+        color: var(--gold);
+        margin-bottom: 30px;
+        text-align: center;
+        text-transform: uppercase;
+      }
+
+      .candles-row {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 30px;
+      }
+      .candle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .flame {
+        width: 10px;
+        height: 20px;
+        background: radial-gradient(
+          ellipse at bottom,
+          #fff176,
+          #ffb300,
+          transparent
+        );
+        border-radius: 50% 50% 20% 20%;
+        animation: flicker 1.5s ease-in-out infinite;
+        filter: drop-shadow(0 0 6px rgba(255, 183, 0, 0.6));
+      }
+      @keyframes flicker {
+        0%,
+        100% {
+          transform: scaleY(1) rotate(-2deg);
+          opacity: 1;
+        }
+        25% {
+          transform: scaleY(1.1) rotate(2deg);
+          opacity: 0.9;
+        }
+        50% {
+          transform: scaleY(0.95) rotate(-1deg);
+          opacity: 1;
+        }
+        75% {
+          transform: scaleY(1.05) rotate(3deg);
+          opacity: 0.95;
+        }
+      }
+      .candle-body {
+        width: 10px;
+        height: 40px;
+        background: linear-gradient(to bottom, #f5e6b8, #c9a84c80);
+        border-radius: 2px;
+      }
+      .symbols-row {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        font-size: 1.8rem;
+        margin-bottom: 24px;
+      }
+      .symbols-row span {
+        color: var(--gold);
+        filter: drop-shadow(0 0 8px rgba(201, 168, 76, 0.4));
+        animation: symbolFloat 3s ease-in-out infinite;
+      }
+      .symbols-row span:nth-child(2) {
+        animation-delay: 0.7s;
+      }
+      .symbols-row span:nth-child(3) {
+        animation-delay: 1.4s;
+      }
+      .symbols-row span:nth-child(4) {
+        animation-delay: 2.1s;
+      }
+      .room-quote {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: rgba(232, 223, 200, 0.65);
+        text-align: center;
+        line-height: 1.7;
+        border-top: 1px solid rgba(201, 168, 76, 0.15);
+        padding-top: 20px;
+      }
+
+      #symbols {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      }
+      .symbols-cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+        margin-top: 52px;
+      }
+      .symbol-card {
+        display: flex;
+        gap: 28px;
+        align-items: flex-start;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        transition: all 0.4s;
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      .symbol-card.visible {
+        animation: scaleIn 0.6s forwards;
+      }
+      @keyframes scaleIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .symbol-card:hover {
+        border-color: rgba(201, 168, 76, 0.4);
+        background: rgba(201, 168, 76, 0.04);
+      }
+      .sym-icon {
+        font-size: 3.5rem;
+        line-height: 1;
+        filter: drop-shadow(0 0 16px rgba(201, 168, 76, 0.5));
+        flex-shrink: 0;
+      }
+      .sym-name {
+        font-family: "Cinzel", serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.2em;
+        color: var(--gold);
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+      .sym-desc {
+        font-family: "EB Garamond", serif;
+        font-size: 0.95rem;
+        line-height: 1.75;
+        color: rgba(232, 223, 200, 0.7);
+      }
+
+      footer {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        padding: 80px 40px 60px;
+        border-top: 1px solid rgba(201, 168, 76, 0.1);
+      }
+      .footer-symbol {
+        font-size: 2.4rem;
+        margin-bottom: 20px;
+        filter: drop-shadow(0 0 20px rgba(201, 168, 76, 0.4));
+        animation: glowPulse 4s ease-in-out infinite;
+        display: block;
+      }
+      .footer-title {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1.1rem;
+        color: var(--gold);
+        margin-bottom: 14px;
+      }
+      .footer-sub {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 1rem;
+        color: rgba(232, 223, 200, 0.45);
+      }
+      .footer-row {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin-top: 40px;
+        font-size: 1.5rem;
+        opacity: 0.4;
+      }
+
+      .ornament-divider {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 0 auto 60px;
+        max-width: 400px;
+        justify-content: center;
+        color: rgba(201, 168, 76, 0.3);
+        font-size: 0.9rem;
+      }
+      .ornament-divider::before,
+      .ornament-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(201, 168, 76, 0.3)
+        );
+      }
+      .ornament-divider::after {
+        background: linear-gradient(
+          to left,
+          transparent,
+          rgba(201, 168, 76, 0.3)
+        );
+      }
+
+      .band {
+        position: relative;
+        z-index: 2;
+        background: linear-gradient(
+          90deg,
+          rgba(201, 168, 76, 0.03),
+          rgba(201, 168, 76, 0.08),
+          rgba(201, 168, 76, 0.03)
+        );
+        border-top: 1px solid rgba(201, 168, 76, 0.1);
+        border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        padding: 24px 40px;
+        overflow: hidden;
+      }
+      .band-scroll {
+        display: flex;
+        gap: 60px;
+        white-space: nowrap;
+        animation: scrollBand 20s linear infinite;
+      }
+      .band-item {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.3em;
+        color: rgba(201, 168, 76, 0.5);
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .band-item::before {
+        content: "✦";
+        color: var(--gold);
+        opacity: 0.4;
+      }
+      @keyframes scrollBand {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 900px) {
+        #theme {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .scripture-grid {
+          grid-template-columns: 1fr;
+        }
+        .speakers-grid {
+          grid-template-columns: 1fr;
+        }
+        .questions-grid {
+          grid-template-columns: 1fr;
+        }
+        .prayer-layout {
+          grid-template-columns: 1fr;
+        }
+        .symbols-cards {
+          grid-template-columns: 1fr;
+        }
+        nav {
+          padding: 14px 20px;
+        }
+        .nav-links {
+          gap: 16px;
+        }
+        section {
+          padding: 70px 24px;
+        }
+      }
+      background: radial-gradient(circle at top, #1a1435 0%, var(--deep) 60%);
+    </style>
+  </head>
+  <body>
+    <!-- STARFIELD -->
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- FLOATING PARTICLES -->
+    <div class="particles" id="particles"></div>
+
+    <!-- NAV -->
+    <nav>
+      <div class="nav-logo">✦ Interfaith Conference</div>
+      <div class="nav-links">
+        <a href="#theme">Theme</a>
+        <a href="#scripture">Scriptures</a>
+        <a href="#speakers">Speakers</a>
+        <a href="#prayer">Prayer Workshop</a>
+        <a href="#symbols">Symbols</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section
+      id="hero"
+      style="
+        max-width: 100%;
+        padding: 0 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      "
+    >
+      <div class="hero-bg-orb orb1"></div>
+      <div class="hero-bg-orb orb2"></div>
+      <div class="hero-bg-orb orb3"></div>
+      <div class="mandala-ring"></div>
+
+      <div class="hero-symbols">
+        <span>✝</span>
+        <span>☸</span>
+        <span>☪</span>
+        <span>✡</span>
+        <span>🕉</span>
+      </div>
+      <div class="hero-eyebrow">
+        Interfaith Conference · Four Days of Discovery
+      </div>
+      <h1 class="hero-title">The Search for<br /><span>Meaning</span></h1>
+      <p class="hero-subtitle">
+        How Religions Help Humanity Find Purpose & Hope — a four-day journey
+        through faith, dialogue, and shared humanity
+      </p>
+      <div class="hero-divider"><span>✦</span></div>
+      <div class="hero-days">
+        <a href="#theme" class="day-pill">Day 1 · Theme & Scripture</a>
+        <a href="#dialogue" class="day-pill">Day 2 · Dialogue</a>
+        <a href="#speakers" class="day-pill">Day 3 · Speakers</a>
+        <a href="#prayer" class="day-pill">Day 4 · Prayer Workshop</a>
+      </div>
+      <div class="scroll-cue">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </section>
+
+    <!-- SCROLLING BAND -->
+    <div class="band">
+      <div class="band-scroll">
+        <span class="band-item">Compassion</span>
+        <span class="band-item">Peace</span>
+        <span class="band-item">Hope</span>
+        <span class="band-item">Purpose</span>
+        <span class="band-item">Dialogue</span>
+        <span class="band-item">Understanding</span>
+        <span class="band-item">Faith</span>
+        <span class="band-item">Inner Peace</span>
+        <span class="band-item">Reflection</span>
+        <span class="band-item">Unity</span>
+        <span class="band-item">Compassion</span>
+        <span class="band-item">Peace</span>
+        <span class="band-item">Hope</span>
+        <span class="band-item">Purpose</span>
+        <span class="band-item">Dialogue</span>
+        <span class="band-item">Understanding</span>
+        <span class="band-item">Faith</span>
+        <span class="band-item">Inner Peace</span>
+        <span class="band-item">Reflection</span>
+        <span class="band-item">Unity</span>
+      </div>
+    </div>
+
+    <!-- THEME SECTION -->
+    <section
+      id="theme"
+      style="
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      "
+    >
+      <div>
+        <span class="section-tag">Day 1 · Theme</span>
+        <div class="gold-line"></div>
+        <h2 class="section-title">Why <span>Meaning</span> Matters</h2>
+        <p class="section-body">
+          Throughout history, people have searched for answers to the most
+          profound questions about life, purpose, suffering, and happiness.
+          Religions serve as sacred guides through these mysteries — offering
+          spiritual teachings, moral frameworks, and a deep sense of hope and
+          belonging.
+        </p>
+        <br />
+        <p class="section-body" style="color: rgba(232, 223, 200, 0.6)">
+          This theme is essential today because many people struggle with
+          stress, loneliness, and existential uncertainty. By exploring how
+          different faiths understand meaning and purpose, we open pathways of
+          mutual understanding and profound personal reflection.
+        </p>
+        <br />
+        <p
+          class="section-body"
+          style="
+            font-style: italic;
+            color: var(--gold-light);
+            font-family: &quot;Cormorant Garamond&quot;, serif;
+            font-size: 1.1rem;
+          "
+        >
+          Every religion attempts to answer universal human questions — even
+          when their teachings differ, they share the pursuit of compassion,
+          peace, and spiritual growth.
+        </p>
+      </div>
+      <div class="theme-visual">
+        <div class="big-symbol">☮</div>
+        <blockquote class="theme-quote">
+          "Exploring how different religions understand meaning allows people to
+          learn from one another and reflect on their own beliefs and values."
+        </blockquote>
+        <div
+          style="display: flex; gap: 20px; font-size: 1.6rem; margin-top: 10px"
+        >
+          <span
+            style="
+              color: var(--gold);
+              filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.5));
+              animation: symbolFloat 3s ease-in-out infinite;
+            "
+            >✝</span
+          >
+          <span
+            style="
+              color: var(--gold);
+              filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.5));
+              animation: symbolFloat 3s 0.6s ease-in-out infinite;
+            "
+            >☸</span
+          >
+          <span
+            style="
+              color: var(--gold);
+              filter: drop-shadow(0 0 10px rgba(201, 168, 76, 0.5));
+              animation: symbolFloat 3s 1.2s ease-in-out infinite;
+            "
+            >☪</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- SCRIPTURE SECTION -->
+    <section
+      id="scripture"
+      style="
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      "
+    >
+      <div style="text-align: center; max-width: 560px; margin: 0 auto 0">
+        <span class="section-tag" style="display: block; text-align: center"
+          >Day 1 · Sacred Words</span
+        >
+        <div class="gold-line" style="margin: 0 auto 32px"></div>
+        <h2 class="section-title">Scripture <span>Passages</span></h2>
+        <p
+          style="
+            font-family: &quot;Cormorant Garamond&quot;, serif;
+            font-size: 1.05rem;
+            color: rgba(232, 223, 200, 0.6);
+            line-height: 1.8;
+          "
+        >
+          Three traditions. One universal longing. Explore how Christianity,
+          Buddhism, and Islam each illuminate the search for meaning.
+        </p>
+      </div>
+      <div class="scripture-grid">
+        <!-- Christianity -->
+        <div class="scripture-card">
+          <div class="card-religion">Christianity</div>
+          <span class="card-symbol">✝</span>
+          <div class="card-verse">
+            "For I know the plans I have for you," declares the Lord, "Plans to
+            prosper you and not to harm you, plans to give you hope and a
+            future."
+          </div>
+          <div class="card-source">Jeremiah 29:11 · Holy Bible</div>
+          <div class="card-connection">
+            This scripture teaches that every person has purpose and direction
+            in life. In Christianity, meaning is found through faith in God and
+            trust in His divine plan — offering hope during times of uncertainty
+            and reminding believers that life holds value even through struggle.
+          </div>
+        </div>
+        <!-- Buddhism -->
+        <div class="scripture-card" style="animation-delay: 0.15s">
+          <div class="card-religion">Buddhism</div>
+          <span class="card-symbol">☸</span>
+          <div class="card-verse">
+            "Peace comes from within. Do not seek it without."
+          </div>
+          <div class="card-source">The Dhammapada · Buddhist Scripture</div>
+          <div class="card-connection">
+            This teaching explains that fulfillment and peace are found through
+            self-awareness and inner growth rather than material possessions or
+            outside validation. Buddhism shows that understanding oneself and
+            overcoming suffering leads to enlightenment and a life of genuine
+            meaning.
+          </div>
+        </div>
+        <!-- Islam -->
+        <div class="scripture-card" style="animation-delay: 0.3s">
+          <div class="card-religion">Islam</div>
+          <span class="card-symbol">☪</span>
+          <div class="card-verse">
+            "And whoever puts their trust in Allah, then He alone is sufficient
+            for them."
+          </div>
+          <div class="card-source">Qur'an 65:3 · The Holy Quran</div>
+          <div class="card-connection">
+            Islam teaches that true meaning comes through faith, trust, and
+            devotion to Allah. Muslims believe life holds purpose when people
+            follow God's guidance and live morally and compassionately —
+            remaining hopeful and faithful even through life's greatest
+            challenges.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIALOGUE SECTION -->
+    <section
+      id="dialogue"
+      style="
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      "
+    >
+      <div class="dialogue-bg"></div>
+      <span class="section-tag">Day 2 · Workshop</span>
+      <div class="gold-line"></div>
+      <h2 class="section-title">Inter-Religious <span>Dialogue</span></h2>
+      <p class="section-body">
+        Four questions to open hearts and minds — designed to spark respectful,
+        meaningful conversation between people of all faith traditions.
+      </p>
+      <div class="questions-grid">
+        <div class="question-item">
+          <div class="q-number">01</div>
+          <div class="q-text">
+            How do different religions help people find meaning and purpose
+            during difficult times in life?
+          </div>
+        </div>
+        <div class="question-item">
+          <div class="q-number">02</div>
+          <div class="q-text">
+            Do you believe people can truly find meaning without spirituality or
+            religion? Why or why not?
+          </div>
+        </div>
+        <div class="question-item">
+          <div class="q-number">03</div>
+          <div class="q-text">
+            The Christian, Buddhist, and Islamic scriptures each describe
+            different paths toward peace and fulfillment. Which ideas are most
+            relevant to young people today?
+          </div>
+        </div>
+        <div class="question-item">
+          <div class="q-number">04</div>
+          <div class="q-text">
+            How can understanding another religion's beliefs about purpose and
+            meaning help reduce stereotypes and conflict between people?
+          </div>
+        </div>
+      </div>
+      <!-- Film box -->
+      <div
+        style="
+          margin-top: 44px;
+          padding: 40px 44px;
+          background: rgba(255, 255, 255, 0.025);
+          border: 1px solid rgba(201, 168, 76, 0.15);
+          display: flex;
+          gap: 32px;
+          align-items: flex-start;
+        "
+      >
+        <div
+          style="
+            font-size: 2.8rem;
+            flex-shrink: 0;
+            color: var(--gold);
+            filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.4));
+          "
+        >
+          🎬
+        </div>
+        <div>
+          <div
+            style="
+              font-family: &quot;Cinzel&quot;, serif;
+              font-size: 0.65rem;
+              letter-spacing: 0.3em;
+              color: var(--gold);
+              margin-bottom: 10px;
+              text-transform: uppercase;
+            "
+          >
+            Film · The Laundromat
+          </div>
+          <div
+            style="
+              font-family: &quot;Cinzel&quot;, serif;
+              font-size: 1rem;
+              color: var(--white);
+              margin-bottom: 14px;
+            "
+          >
+            Short Film on Interfaith Dialogue
+          </div>
+          <p
+            style="
+              font-family: &quot;Cormorant Garamond&quot;, serif;
+              font-style: italic;
+              font-size: 1.05rem;
+              color: rgba(232, 223, 200, 0.7);
+              line-height: 1.75;
+            "
+          >
+            In this short film, two people from different cultural and religious
+            backgrounds connect through kindness and understanding.
+            <strong style="color: var(--cream); font-style: normal"
+              >How can small everyday actions build respect and unity between
+              different religions and communities?</strong
+            >
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPEAKERS -->
+    <section
+      id="speakers"
+      style="
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      "
+    >
+      <div style="text-align: center; margin-bottom: 0">
+        <span class="section-tag" style="display: block; text-align: center"
+          >Day 3 · Panel</span
+        >
+        <div class="gold-line" style="margin: 0 auto 32px"></div>
+        <h2 class="section-title">Speaker <span>Panel</span></h2>
+        <p
+          style="
+            font-family: &quot;Cormorant Garamond&quot;, serif;
+            font-size: 1.05rem;
+            color: rgba(232, 223, 200, 0.6);
+            line-height: 1.8;
+            max-width: 500px;
+            margin: 0 auto;
+          "
+        >
+          Three voices. Three faiths. One shared commitment to compassion,
+          peace, and the flourishing of humanity.
+        </p>
+      </div>
+      <div class="speakers-grid">
+        <!-- Pope Francis -->
+        <div class="speaker-card">
+          <div class="speaker-avatar">✝</div>
+          <div class="speaker-name">Pope Francis</div>
+          <div class="speaker-religion">Christianity · Rome</div>
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.9rem;
+              color: rgba(232, 223, 200, 0.6);
+              line-height: 1.7;
+            "
+          >
+            A global voice for compassion, humility, and interfaith cooperation.
+            His teachings on human dignity and care for the poor connect deeply
+            to the search for meaning through service.
+          </p>
+          <ul class="speaker-principles">
+            <li>
+              Human Dignity — Every person holds inherent value regardless of
+              religion, race, or status
+            </li>
+            <li>
+              Peace & Justice — Ending violence begins with listening and mutual
+              respect
+            </li>
+            <li>
+              Care for the Poor — Helping the vulnerable gives deeper meaning to
+              human life
+            </li>
+            <li>
+              Environmental Responsibility — Creation is a gift from God, to be
+              protected for all
+            </li>
+          </ul>
+        </div>
+        <!-- Dalai Lama -->
+        <div class="speaker-card" style="animation-delay: 0.15s">
+          <div
+            class="speaker-avatar"
+            style="background: linear-gradient(135deg, var(--gold), #9b4e63)"
+          >
+            ☸
+          </div>
+          <div class="speaker-name">The Dalai Lama</div>
+          <div class="speaker-religion">Buddhism · Tibet</div>
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.9rem;
+              color: rgba(232, 223, 200, 0.6);
+              line-height: 1.7;
+            "
+          >
+            A living symbol of inner peace and non-violence, teaching that
+            genuine happiness arises from compassion and self-understanding —
+            not from wealth or achievement.
+          </p>
+          <ul class="speaker-principles">
+            <li>
+              Compassion — Caring for others creates stronger communities and
+              meaningful lives
+            </li>
+            <li>
+              Inner Peace — True peace comes from within through mindfulness and
+              growth
+            </li>
+            <li>
+              Nonviolence — Patience and understanding build harmony; anger
+              creates suffering
+            </li>
+            <li>
+              Self-Reflection — Understanding oneself is the path to wisdom and
+              fulfillment
+            </li>
+          </ul>
+        </div>
+        <!-- Malala -->
+        <div class="speaker-card" style="animation-delay: 0.3s">
+          <div
+            class="speaker-avatar"
+            style="
+              background: linear-gradient(
+                135deg,
+                var(--accent-rose),
+                var(--accent-blue)
+              );
+            "
+          >
+            ☪
+          </div>
+          <div class="speaker-name">Malala Yousafzai</div>
+          <div class="speaker-religion">Islam · Pakistan</div>
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.9rem;
+              color: rgba(232, 223, 200, 0.6);
+              line-height: 1.7;
+            "
+          >
+            A beacon of courage and Islamic values in action — using faith as
+            the foundation for advocating education, equality, and human rights
+            for young people worldwide.
+          </p>
+          <ul class="speaker-principles">
+            <li>
+              Education & Knowledge — Islam values learning for all people, men
+              and women alike
+            </li>
+            <li>
+              Courage & Perseverance — Standing for justice even in fear
+              demonstrates true faith
+            </li>
+            <li>
+              Equality & Human Rights — Every person deserves dignity, freedom,
+              and opportunity
+            </li>
+            <li>
+              Hope & Purpose — Belief and determination can inspire profound
+              change in the world
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRAYER WORKSHOP -->
+    <section
+      id="prayer"
+      style="
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      "
+    >
+      <span class="section-tag">Day 4 · Workshop</span>
+      <div class="gold-line"></div>
+      <h2 class="section-title">
+        Finding Meaning Through <span>Prayer</span> & Reflection
+      </h2>
+      <p class="section-body" style="margin-bottom: 52px">
+        A sacred space for participants of all faiths to experience moments of
+        peace, reflection, and spiritual connection — together yet individually.
+      </p>
+      <div class="prayer-layout">
+        <!-- Schedule -->
+        <div>
+          <div
+            style="
+              font-family: &quot;Cinzel&quot;, serif;
+              font-size: 0.7rem;
+              letter-spacing: 0.3em;
+              color: var(--gold);
+              text-transform: uppercase;
+              margin-bottom: 28px;
+            "
+          >
+            Workshop Schedule
+          </div>
+          <div class="schedule-list">
+            <div class="schedule-item">
+              <div class="sched-time">5 min</div>
+              <div>
+                <div class="sched-title">Introduction</div>
+                <div class="sched-desc">
+                  Welcome participants. Explain interfaith prayer and respectful
+                  reflection. Introduce the theme: "The Search for Meaning."
+                </div>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="sched-time">5 min</div>
+              <div>
+                <div class="sched-title">Silent Reflection</div>
+                <div class="sched-desc">
+                  Soft instrumental music plays. Participants reflect on what
+                  gives meaning and purpose to their lives.
+                </div>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="sched-time">5 min</div>
+              <div>
+                <div class="sched-title">Christian Prayer Reading</div>
+                <div class="sched-desc">
+                  A short Bible reading about hope and purpose is shared.
+                  Participants reflect quietly on Jeremiah 29:11.
+                </div>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="sched-time">10 min</div>
+              <div>
+                <div class="sched-title">Buddhist Meditation</div>
+                <div class="sched-desc">
+                  Guided breathing and mindfulness meditation, focused on inner
+                  peace and self-awareness.
+                </div>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="sched-time">5 min</div>
+              <div>
+                <div class="sched-title">Islamic Prayer Reflection</div>
+                <div class="sched-desc">
+                  Qur'an 65:3 is read aloud. Participants reflect on
+                  perseverance, trust, and hope.
+                </div>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="sched-time">10 min</div>
+              <div>
+                <div class="sched-title">Group Reflection Discussion</div>
+                <div class="sched-desc">
+                  What ideas connected across the prayers? How did different
+                  practices feel? What was learned?
+                </div>
+              </div>
+            </div>
+            <div class="schedule-item">
+              <div class="sched-time">5 min</div>
+              <div>
+                <div class="sched-title">Closing Reflection</div>
+                <div class="sched-desc">
+                  A final moment of silence. Participants are encouraged to
+                  continue exploring different faiths respectfully.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prayer Room Visual -->
+        <div class="prayer-room">
+          <div class="room-title">✦ Prayer Room Atmosphere ✦</div>
+          <div class="candles-row">
+            <div class="candle">
+              <div class="flame" style="animation-delay: 0s"></div>
+              <div class="candle-body"></div>
+            </div>
+            <div class="candle">
+              <div
+                class="flame"
+                style="animation-delay: 0.3s; width: 8px; height: 16px"
+              ></div>
+              <div class="candle-body" style="height: 52px"></div>
+            </div>
+            <div class="candle">
+              <div class="flame" style="animation-delay: 0.6s"></div>
+              <div class="candle-body" style="height: 36px"></div>
+            </div>
+            <div class="candle">
+              <div
+                class="flame"
+                style="animation-delay: 0.9s; width: 9px; height: 18px"
+              ></div>
+              <div class="candle-body" style="height: 44px"></div>
+            </div>
+            <div class="candle">
+              <div class="flame" style="animation-delay: 1.2s"></div>
+              <div class="candle-body"></div>
+            </div>
+          </div>
+          <div class="symbols-row">
+            <span>✝</span>
+            <span>☸</span>
+            <span>🪷</span>
+            <span>☪</span>
+          </div>
+          <div
+            style="
+              font-family: &quot;Cinzel&quot;, serif;
+              font-size: 0.65rem;
+              letter-spacing: 0.25em;
+              color: rgba(201, 168, 76, 0.5);
+              text-align: center;
+              margin-bottom: 20px;
+              text-transform: uppercase;
+            "
+          >
+            Warm light · Cushioned circle · Peaceful music
+          </div>
+          <div class="room-quote">
+            <p style="margin-bottom: 12px">
+              "For I know the plans I have for you…" — Jeremiah 29:11
+            </p>
+            <p style="margin-bottom: 12px">
+              "Peace comes from within. Do not seek it without." — The
+              Dhammapada
+            </p>
+            <p>
+              "And whoever puts their trust in Allah, then He alone is
+              sufficient for them." — Qur'an 65:3
+            </p>
+          </div>
+          <div
+            style="
+              margin-top: 28px;
+              padding: 20px;
+              background: rgba(201, 168, 76, 0.05);
+              border: 1px solid rgba(201, 168, 76, 0.1);
+            "
+          >
+            <div
+              style="
+                font-family: &quot;Cinzel&quot;, serif;
+                font-size: 0.6rem;
+                letter-spacing: 0.25em;
+                color: var(--gold);
+                margin-bottom: 14px;
+                text-transform: uppercase;
+              "
+            >
+              Room Layout
+            </div>
+            <p
+              style="
+                font-family: &quot;EB Garamond&quot;, serif;
+                font-size: 0.9rem;
+                color: rgba(232, 223, 200, 0.6);
+                line-height: 1.7;
+              "
+            >
+              Participants sit in a large circle on chairs and floor cushions —
+              a circle representing <em>equality, unity, and openness</em>. The
+              Christian cross is placed near the front beside a candle; the
+              lotus flower symbol at the center of the room.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SYMBOLS SECTION -->
+    <section
+      id="symbols"
+      style="
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 100px 40px;
+        position: relative;
+        z-index: 2;
+      "
+    >
+      <span class="section-tag">Sacred Iconography</span>
+      <div class="gold-line"></div>
+      <h2 class="section-title">Symbols of <span>Faith</span></h2>
+      <p class="section-body" style="margin-bottom: 52px">
+        Each symbol carries centuries of meaning — chosen to represent the
+        hopes, values, and spiritual journey at the heart of this conference.
+      </p>
+      <div class="symbols-cards">
+        <div class="symbol-card">
+          <div class="sym-icon">✝</div>
+          <div>
+            <div class="sym-name">The Christian Cross</div>
+            <div class="sym-desc">
+              Symbolizes hope, sacrifice, love, and faith in God. One of the
+              most sacred symbols in Christianity, representing the teachings
+              and sacrifice of Jesus Christ. Placed on a small table near the
+              front of the prayer room beside a candle — connecting directly to
+              the conference theme of searching for meaning and purpose.
+            </div>
+          </div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym-icon">🪷</div>
+          <div>
+            <div class="sym-name">The Lotus Flower</div>
+            <div class="sym-desc">
+              In Buddhism, the lotus represents purity, spiritual awakening, and
+              inner peace. It symbolizes growth — rising from muddy water to
+              bloom in beauty. Placed at the center of the prayer room,
+              connecting to the idea of personal growth and finding peace
+              through self-reflection and wisdom.
+            </div>
+          </div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym-icon">☪</div>
+          <div>
+            <div class="sym-name">The Star & Crescent</div>
+            <div class="sym-desc">
+              A widely recognized symbol of Islam, representing faith, divine
+              guidance, and the light of truth. It connects to the Islamic
+              teaching that life holds meaning through trust in Allah and
+              righteous living — a reminder to remain hopeful and faithful
+              through all of life's challenges.
+            </div>
+          </div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym-icon">☮</div>
+          <div>
+            <div class="sym-name">The Peace Symbol</div>
+            <div class="sym-desc">
+              Transcending any single tradition, the peace symbol embodies the
+              shared aspiration across all faiths — that compassion,
+              understanding, and respectful dialogue can heal divisions and
+              create a world where every human being can find meaning,
+              belonging, and hope.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="footer-symbol">✦</span>
+      <div class="footer-title">The Search for Meaning</div>
+      <p class="footer-sub">
+        An Interfaith Conference · Four Days of Discovery, Dialogue & Reflection
+      </p>
+      <div class="footer-row">
+        <span>✝</span><span>☸</span><span>☪</span><span>✡</span><span>🕉</span>
+      </div>
+      <p
+        style="
+          font-family: &quot;Cinzel&quot;, serif;
+          font-size: 0.58rem;
+          letter-spacing: 0.25em;
+          color: rgba(201, 168, 76, 0.2);
+          margin-top: 40px;
+          text-transform: uppercase;
+        "
+      >
+        Christianity · Buddhism · Islam · One Shared Humanity
+      </p>
+    </footer>
+
+    <script>
+      // ─────────────────────────────
+      // FLASHLIGHT MOUSE EFFECT
+      // ─────────────────────────────
+
+      const cursor = document.createElement("div");
+      cursor.classList.add("custom-cursor");
+      document.body.appendChild(cursor);
+
+      document.addEventListener("mousemove", (e) => {
+        const x = e.clientX + "px";
+        const y = e.clientY + "px";
+
+        document.documentElement.style.setProperty("--mouse-x", x);
+        document.documentElement.style.setProperty("--mouse-y", y);
+
+        cursor.style.left = x;
+        cursor.style.top = y;
+      });
+
+      // cursor grow on hover
+      const hoverables = document.querySelectorAll(
+        "a, .day-pill, .scripture-card, .speaker-card, .symbol-card, .question-item",
+      );
+
+      hoverables.forEach((el) => {
+        el.addEventListener("mouseenter", () => {
+          cursor.classList.add("hovering");
+        });
+
+        el.addEventListener("mouseleave", () => {
+          cursor.classList.remove("hovering");
+        });
+      });
+
+      // ─────────────────────────────
+      // PARALLAX HERO EFFECT
+      // ─────────────────────────────
+
+      const hero = document.querySelector("#hero");
+
+      document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 40;
+        const y = (window.innerHeight / 2 - e.clientY) / 40;
+
+        hero.style.transform = `translate(${x}px, ${y}px)`;
+      });
+
+      // ─────────────────────────────
+      // SMOOTH REVEAL ANIMATION
+      // ─────────────────────────────
+
+      const revealElements = document.querySelectorAll(
+        ".scripture-card, .question-item, .speaker-card, .schedule-item, .symbol-card",
+      );
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+              entry.target.animate(
+                [
+                  {
+                    opacity: 0,
+                    transform: "translateY(40px) scale(0.96)",
+                  },
+                  {
+                    opacity: 1,
+                    transform: "translateY(0px) scale(1)",
+                  },
+                ],
+                {
+                  duration: 900,
+                  easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+                  fill: "forwards",
+                  delay: index * 80,
+                },
+              );
+            }
+          });
+        },
+        {
+          threshold: 0.15,
+        },
+      );
+
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // ─────────────────────────────
+      // FLOATING SYMBOLS RANDOM MOTION
+      // ─────────────────────────────
+
+      const symbols = document.querySelectorAll(
+        ".hero-symbols span, .symbols-row span, .sym-icon",
+      );
+
+      symbols.forEach((symbol, i) => {
+        symbol.animate(
+          [
+            {
+              transform: "translateY(0px) rotate(0deg)",
+            },
+            {
+              transform: `translateY(${-8 - i}px) rotate(${i % 2 ? "-" : ""}4deg)`,
+            },
+            {
+              transform: "translateY(0px) rotate(0deg)",
+            },
+          ],
+          {
+            duration: 3000 + i * 400,
+            iterations: Infinity,
+            easing: "ease-in-out",
+          },
+        );
+      });
+    </script>
+  </body>
+</html>
