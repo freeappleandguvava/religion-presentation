@@ -1322,9 +1322,11 @@
       <div class="nav-links">
         <a href="#theme">Theme</a>
         <a href="#scripture">Scriptures</a>
+        <a href="#dialogue">Dialogue</a>
         <a href="#speakers">Speakers</a>
         <a href="#prayer">Prayer Workshop</a>
         <a href="#symbols">Symbols</a>
+        <a href="#bibliography">Bibliography</a>
       </div>
     </nav>
 
@@ -1569,6 +1571,222 @@
       </div>
     </section>
 
+    <!-- TOOLTIP STYLES -->
+    <style>
+      .tooltip-wrapper {
+        position: relative;
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        width: 100%;
+      }
+      .why-tooltip {
+        position: absolute;
+        bottom: calc(100% + 14px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(
+          135deg,
+          rgba(13, 10, 26, 0.98),
+          rgba(22, 17, 46, 0.98)
+        );
+        border: 1px solid rgba(201, 168, 76, 0.35);
+        color: rgba(232, 223, 200, 0.9);
+        font-family: "EB Garamond", serif;
+        font-size: 0.88rem;
+        line-height: 1.72;
+        padding: 16px 20px;
+        border-radius: 4px;
+        width: 320px;
+        z-index: 200;
+        pointer-events: none;
+        opacity: 0;
+        transition:
+          opacity 0.25s ease,
+          transform 0.25s ease;
+        transform: translateX(-50%) translateY(6px);
+        box-shadow:
+          0 12px 40px rgba(0, 0, 0, 0.6),
+          0 0 20px rgba(201, 168, 76, 0.1);
+      }
+      .why-tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 7px solid transparent;
+        border-top-color: rgba(201, 168, 76, 0.35);
+      }
+      .why-tooltip-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.28em;
+        color: var(--gold);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        display: block;
+      }
+      .question-item:hover .why-tooltip {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0px);
+      }
+      .question-item {
+        position: relative;
+        cursor: default;
+      }
+      .why-hint {
+        font-family: "Cinzel", serif;
+        font-size: 0.55rem;
+        letter-spacing: 0.2em;
+        color: rgba(201, 168, 76, 0.45);
+        text-transform: uppercase;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .why-hint::before {
+        content: "?";
+        width: 14px;
+        height: 14px;
+        border: 1px solid rgba(201, 168, 76, 0.35);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.6rem;
+        flex-shrink: 0;
+        line-height: 14px;
+        text-align: center;
+      }
+
+      /* Video discussion questions sub-grid */
+      .video-q-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 18px;
+        margin-top: 28px;
+      }
+      @media (max-width: 900px) {
+        .video-q-grid {
+          grid-template-columns: 1fr;
+        }
+        .why-tooltip {
+          width: 260px;
+        }
+      }
+      .video-q-item {
+        position: relative;
+        padding: 22px 24px;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(201, 168, 76, 0.1);
+        border-radius: 2px;
+        transition: all 0.3s;
+        cursor: default;
+      }
+      .video-q-item:hover {
+        background: rgba(201, 168, 76, 0.04);
+        border-color: rgba(201, 168, 76, 0.28);
+      }
+      .video-q-item:hover .why-tooltip {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0px);
+      }
+      .vq-number {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1.1rem;
+        color: var(--gold);
+        opacity: 0.4;
+        margin-bottom: 10px;
+      }
+      .vq-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1rem;
+        font-style: italic;
+        color: rgba(232, 223, 200, 0.8);
+        line-height: 1.72;
+      }
+
+      .video-wrap {
+        display: flex;
+        justify-content: center;
+        margin: 40px 0;
+      }
+
+      .yt-thumb {
+        position: relative;
+        display: block;
+        width: 80%;
+        max-width: 800px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .yt-thumb img {
+        width: 100%;
+        display: block;
+      }
+
+      .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 48px;
+        color: white;
+        text-shadow: 0 0 10px black;
+        pointer-events: none;
+      }
+
+      /* YouTube embed */
+      .yt-embed-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 3px;
+        border: 1px solid rgba(201, 168, 76, 0.2);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      }
+      .yt-embed-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .yt-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(13, 10, 26, 0.95);
+        color: rgba(201, 168, 76, 0.6);
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        gap: 12px;
+        text-align: center;
+        padding: 20px;
+      }
+      .yt-play-icon {
+        width: 56px;
+        height: 56px;
+        border: 2px solid rgba(201, 168, 76, 0.4);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+        color: var(--gold);
+      }
+    </style>
+
     <!-- DIALOGUE SECTION -->
     <section
       id="dialogue"
@@ -1585,101 +1803,256 @@
       <div class="gold-line"></div>
       <h2 class="section-title">Inter-Religious <span>Dialogue</span></h2>
       <p class="section-body">
-        Four questions to open hearts and minds — designed to spark respectful,
-        meaningful conversation between people of all faith traditions.
+        Four workshop discussion questions to open hearts and minds — designed
+        to spark respectful, meaningful conversation between people of all faith
+        traditions.
+        <em
+          style="
+            color: rgba(201, 168, 76, 0.6);
+            font-family: &quot;Cormorant Garamond&quot;, serif;
+            font-size: 0.95rem;
+          "
+          >Hover over any question to see why it matters.</em
+        >
       </p>
+
+      <!-- WORKSHOP DISCUSSION QUESTIONS -->
       <div class="questions-grid">
         <div class="question-item">
-          <div class="q-number">01</div>
-          <div class="q-text">
-            How do different religions help people find meaning and purpose
-            during difficult times in life?
+          <div class="tooltip-wrapper">
+            <div class="q-number">01</div>
+            <div>
+              <div class="q-text">
+                How do different religions help people find meaning and purpose
+                during difficult times in life?
+              </div>
+              <div class="why-hint">Hover to see why this question matters</div>
+            </div>
+          </div>
+          <div class="why-tooltip">
+            <span class="why-tooltip-label">✦ Why This Question</span>
+            This question encourages participants to explore how faith
+            traditions provide emotional support, hope, guidance, and resilience
+            during suffering or hardship. It helps students recognize that many
+            religions address universal human struggles such as grief, fear,
+            loneliness, and uncertainty. Discussing this topic can build empathy
+            and understanding between people of different beliefs.
           </div>
         </div>
+
         <div class="question-item">
-          <div class="q-number">02</div>
-          <div class="q-text">
-            Do you believe people can truly find meaning without spirituality or
-            religion? Why or why not?
+          <div class="tooltip-wrapper">
+            <div class="q-number">02</div>
+            <div>
+              <div class="q-text">
+                Do you believe people can truly find meaning without
+                spirituality or religion? Why or why not?
+              </div>
+              <div class="why-hint">Hover to see why this question matters</div>
+            </div>
+          </div>
+          <div class="why-tooltip">
+            <span class="why-tooltip-label">✦ Why This Question</span>
+            This question invites respectful discussion about different
+            worldviews, including both religious and non-religious perspectives.
+            It encourages critical thinking about purpose, morality, identity,
+            and happiness. It is important because interfaith dialogue should
+            include openness to different experiences and beliefs while
+            promoting respectful communication.
           </div>
         </div>
+
         <div class="question-item">
-          <div class="q-number">03</div>
-          <div class="q-text">
-            The Christian, Buddhist, and Islamic scriptures each describe
-            different paths toward peace and fulfillment. Which ideas are most
-            relevant to young people today?
+          <div class="tooltip-wrapper">
+            <div class="q-number">03</div>
+            <div>
+              <div class="q-text">
+                The Christian, Buddhist, and Islamic scriptures each describe
+                different paths toward peace and fulfillment. Which ideas from
+                these teachings do you think are most relevant to young people
+                today?
+              </div>
+              <div class="why-hint">Hover to see why this question matters</div>
+            </div>
+          </div>
+          <div class="why-tooltip">
+            <span class="why-tooltip-label">✦ Why This Question</span>
+            This question helps participants connect religious teachings to
+            modern issues faced by youth, such as stress, identity, mental
+            health, social pressure, conflict, and finding purpose. It
+            encourages students to compare teachings across religions and
+            discover shared values like compassion, forgiveness,
+            self-discipline, and inner peace. This promotes meaningful
+            interreligious dialogue and demonstrates how sacred teachings remain
+            relevant today.
           </div>
         </div>
+
         <div class="question-item">
-          <div class="q-number">04</div>
-          <div class="q-text">
-            How can understanding another religion's beliefs about purpose and
-            meaning help reduce stereotypes and conflict between people?
+          <div class="tooltip-wrapper">
+            <div class="q-number">04</div>
+            <div>
+              <div class="q-text">
+                How can understanding another religion's beliefs about purpose
+                and meaning help reduce stereotypes and conflict between people?
+              </div>
+              <div class="why-hint">Hover to see why this question matters</div>
+            </div>
+          </div>
+          <div class="why-tooltip">
+            <span class="why-tooltip-label">✦ Why This Question</span>
+            This question encourages participants to move beyond assumptions and
+            learn directly about the values and beliefs of other religions.
+            Misunderstandings and stereotypes often come from ignorance or lack
+            of communication. By understanding how different religions guide
+            people toward purpose, morality, and peace, participants can develop
+            respect, empathy, and stronger relationships with others. This
+            discussion supports the main goal of interfaith dialogue: promoting
+            acceptance, cooperation, and peace between different communities.
           </div>
         </div>
       </div>
-      <!-- Film box -->
+
+      <!-- TEDx VIDEO SECTION -->
       <div
         style="
-          margin-top: 44px;
+          margin-top: 72px;
           padding: 40px 44px;
           background: rgba(255, 255, 255, 0.025);
-          border: 1px solid rgba(201, 168, 76, 0.15);
-          display: flex;
-          gap: 32px;
-          align-items: flex-start;
+          border: 1px solid rgba(201, 168, 76, 0.18);
         "
       >
         <div
           style="
-            font-size: 2.8rem;
-            flex-shrink: 0;
+            font-family: &quot;Cinzel&quot;, serif;
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
             color: var(--gold);
-            filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.4));
+            margin-bottom: 8px;
+            text-transform: uppercase;
           "
         >
-          🎬
+          YouTube Video · TEDx Talk
         </div>
-        <div>
+        <div
+          style="
+            font-family: &quot;Cinzel&quot;, serif;
+            font-size: 1.1rem;
+            color: var(--white);
+            margin-bottom: 6px;
+          "
+        >
+          TEDxDU — The Interfaith Amigos
+        </div>
+        <p
+          style="
+            font-family: &quot;Cormorant Garamond&quot;, serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: rgba(232, 223, 200, 0.6);
+            margin-bottom: 28px;
+            line-height: 1.7;
+          "
+        >
+          Breaking the Taboos of Interfaith Dialogue
+        </p>
+
+        <!-- embed video -->
+        <div class="video-wrap">
+          <a
+            href="https://www.youtube.com/watch?v=tPnZArtsG_c"
+            target="_blank"
+            class="yt-thumb"
+          >
+            <img
+              src="https://img.youtube.com/vi/tPnZArtsG_c/hqdefault.jpg"
+              alt="YouTube video thumbnail"
+            />
+            <div class="play-button">▶</div>
+          </a>
+        </div>
+
+        <!-- VIDEO DISCUSSION QUESTIONS -->
+        <div style="margin-top: 36px">
           <div
             style="
               font-family: &quot;Cinzel&quot;, serif;
               font-size: 0.65rem;
               letter-spacing: 0.3em;
               color: var(--gold);
-              margin-bottom: 10px;
               text-transform: uppercase;
+              margin-bottom: 6px;
             "
           >
-            Film · The Laundromat
-          </div>
-          <div
-            style="
-              font-family: &quot;Cinzel&quot;, serif;
-              font-size: 1rem;
-              color: var(--white);
-              margin-bottom: 14px;
-            "
-          >
-            Short Film on Interfaith Dialogue
+            Video Discussion Questions
           </div>
           <p
             style="
-              font-family: &quot;Cormorant Garamond&quot;, serif;
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.88rem;
+              color: rgba(232, 223, 200, 0.5);
+              margin-bottom: 22px;
               font-style: italic;
-              font-size: 1.05rem;
-              color: rgba(232, 223, 200, 0.7);
-              line-height: 1.75;
             "
           >
-            In this short film, two people from different cultural and religious
-            backgrounds connect through kindness and understanding.
-            <strong style="color: var(--cream); font-style: normal"
-              >How can small everyday actions build respect and unity between
-              different religions and communities?</strong
-            >
+            Hover over any question to see why it is important.
           </p>
+
+          <div class="video-q-grid">
+            <div class="video-q-item">
+              <div class="vq-number">01</div>
+              <div class="vq-text">
+                In the TEDx talk, the speakers explain how friendship between
+                people of different religions can break down fear and
+                misunderstanding. Why do you think personal relationships are
+                important in reducing religious conflict?
+              </div>
+              <div class="why-hint">Hover to see why</div>
+              <div class="why-tooltip">
+                <span class="why-tooltip-label">✦ Why This Question</span>
+                This question encourages participants to think about how direct
+                human connection can challenge stereotypes and prejudice. It
+                highlights the importance of communication, empathy, and trust
+                in interfaith dialogue.
+              </div>
+            </div>
+
+            <div class="video-q-item">
+              <div class="vq-number">02</div>
+              <div class="vq-text">
+                The Interfaith Amigos discuss difficult and sometimes
+                uncomfortable conversations about religion. Why is it important
+                to have open discussions about religious differences instead of
+                avoiding them?
+              </div>
+              <div class="why-hint">Hover to see why</div>
+              <div class="why-tooltip">
+                <span class="why-tooltip-label">✦ Why This Question</span>
+                This question promotes critical thinking about the role of
+                honest dialogue in building peace and understanding. It helps
+                participants recognize that avoiding differences can create more
+                ignorance and division.
+              </div>
+            </div>
+
+            <div class="video-q-item">
+              <div class="vq-number">03</div>
+              <div class="vq-text">
+                What message from the TEDx talk do you think young people today
+                need to hear the most, and how could it improve relationships
+                between different communities?
+              </div>
+              <div class="why-hint">Hover to see why</div>
+              <div class="why-tooltip">
+                <span class="why-tooltip-label">✦ Why This Question</span>
+                This question connects the video's ideas to modern society and
+                encourages students to apply the lessons of interfaith
+                understanding to real-world situations. It also invites
+                reflection on the role young people can play in promoting
+                acceptance and unity.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -2125,6 +2498,308 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- BIBLIOGRAPHY SECTION -->
+    <section
+      id="bibliography"
+      style="
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 80px 40px 60px;
+        position: relative;
+        z-index: 2;
+        border-top: 1px solid rgba(201, 168, 76, 0.1);
+      "
+    >
+      <span class="section-tag">Sources</span>
+      <div class="gold-line"></div>
+      <h2 class="section-title" style="margin-bottom: 40px">
+        Biblio<span>graphy</span>
+      </h2>
+      <ol
+        style="
+          list-style: none;
+          counter-reset: bib-counter;
+          display: flex;
+          flex-direction: column;
+          gap: 18px;
+        "
+      >
+        <li
+          style="
+            counter-increment: bib-counter;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+          "
+        >
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >1.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            <!-- /link here/ — wrap "Bible Gateway" in an anchor tag with href="https://www.biblegateway.com" -->
+            "The Holy Bible, New International Version." <em>Bible Gateway</em>,
+            Zondervan, www.biblegateway.com. Accessed 20 May 2026.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >2.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            <!-- /link here/ — wrap "Encyclopaedia Britannica" in an anchor tag with href="https://www.britannica.com/topic/Dhammapada" -->
+            "Dhammapada." <em>Encyclopaedia Britannica</em>, Encyclopaedia
+            Britannica, Inc., www.britannica.com/topic/Dhammapada. Accessed 20
+            May 2026.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >3.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            <!-- /link here/ — wrap "Encyclopaedia Britannica" in an anchor tag with href="https://www.britannica.com/topic/Quran" -->
+            "Qurʾān." <em>Encyclopaedia Britannica</em>, Encyclopedia
+            Britannica, Inc., www.britannica.com/topic/Quran. Accessed 21 May
+            2026.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >4.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            <!-- /link here/ — wrap "Encyclopaedia Britannica" in an anchor tag with href="https://www.britannica.com/summary/Quran" -->
+            "Qurʾān Summary." <em>Encyclopaedia Britannica</em>, Encyclopedia
+            Britannica, Inc., www.britannica.com/summary/Quran. Accessed 22 May
+            2026.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >5.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            <!-- /link here/ — wrap "YouVersion Bible" in an anchor tag with href="https://www.bible.com" -->
+            "The Holy Bible, New International Version."
+            <em>YouVersion Bible</em>, Biblica, www.bible.com. Accessed 21 May
+            2026.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >6.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            <!-- /link here/ — wrap "Grammarly" in an anchor tag with href="https://www.grammarly.com/citations/mla/quran" -->
+            "How to Cite the Quran in MLA." <em>Grammarly</em>, Grammarly Inc.,
+            www.grammarly.com/citations/mla/quran. Accessed 22 May 2026.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >7.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            <!-- /link here/ — wrap "Bible SABDA" in an anchor tag with href="https://bible.sabda.org/verse.php?book=24&chapter=29&verse=11" -->
+            "Jeremiah 29:11." <em>Bible SABDA</em>,
+            bible.sabda.org/verse.php?book=24&amp;chapter=29&amp;verse=11.
+            Accessed 22 May 2026.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >8.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            Francis. <em>Laudato Si': On Care for Our Common Home</em>. Vatican
+            Press, 2015.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >9.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            Dalai Lama. <em>The Art of Happiness</em>. Riverhead Books, 1998.
+          </p>
+        </li>
+        <li style="display: flex; gap: 18px; align-items: flex-start">
+          <span
+            style="
+              font-family: &quot;Cinzel Decorative&quot;, serif;
+              font-size: 0.8rem;
+              color: var(--gold);
+              opacity: 0.5;
+              min-width: 28px;
+              padding-top: 3px;
+            "
+            >10.</span
+          >
+          <p
+            style="
+              font-family: &quot;EB Garamond&quot;, serif;
+              font-size: 0.95rem;
+              color: rgba(232, 223, 200, 0.75);
+              line-height: 1.75;
+            "
+          >
+            Malala Yousafzai and Christina Lamb.
+            <em
+              >I Am Malala: The Girl Who Stood Up for Education and Was Shot by
+              the Taliban</em
+            >. Little, Brown and Company, 2013.
+          </p>
+        </li>
+      </ol>
+      <p
+        style="
+          font-family: &quot;Cormorant Garamond&quot;, serif;
+          font-style: italic;
+          font-size: 0.9rem;
+          color: rgba(201, 168, 76, 0.4);
+          margin-top: 40px;
+          text-align: right;
+        "
+      >
+        — Thank you for your time, Sarv Patel
+      </p>
     </section>
 
     <!-- FOOTER -->
